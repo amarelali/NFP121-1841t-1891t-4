@@ -71,6 +71,7 @@ public class SauvegarderButtonEnseignant_Command extends JButton implements Comm
                 buffer.close();
             } catch (IOException ex) {
                 //JoptionPane close programme
+                editor.alert.JOptionPaneClose("clique sur yes pour fermer l'application");
             }
 
         }

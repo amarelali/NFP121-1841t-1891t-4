@@ -9,7 +9,7 @@ import java.io.*;
 import java.nio.file.*;
 import java.util.*;
 import javax.swing.*;
-import org.json.simple.JSONObject;
+import org.json.simple.*;
 
 /**
  *
@@ -34,11 +34,11 @@ class SauvegarderButtonSalle_Command extends JButton implements CommandInterface
         } else {
             // get text filed
             String nomSalle = editor.textFiled_NameSalle.getText();
-            int capaciteSalle = Integer.parseInt(editor.textFiled_CapaciteSalle.getText());            
-            String compus = editor.ComboBox_CampusSalle.getSelectedItem().toString();            
+            int capaciteSalle = Integer.parseInt(editor.textFiled_CapaciteSalle.getText());
+            String compus = editor.ComboBox_CampusSalle.getSelectedItem().toString();
             String capaciter = editor.textFiled_CapaciteSalle.getText();
-            Salle salle = new Salle(nomSalle,compus,capaciteSalle);
-            
+            Salle salle = new Salle(nomSalle, compus, capaciteSalle);
+
             // Creates a FileWriter
             FileWriter file;
             int lines;
@@ -60,8 +60,8 @@ class SauvegarderButtonSalle_Command extends JButton implements CommandInterface
                 }
 
                 obj.put("salleId", salle.getNoSalle());
-                obj.put("nomSalle",nomSalle );
-                obj.put("compus",compus );
+                obj.put("nomSalle", nomSalle);
+                obj.put("compus", compus);
                 obj.put("capaciter", Integer.parseInt(capaciter));
 
                 buffer.write(obj.toJSONString());
@@ -71,10 +71,11 @@ class SauvegarderButtonSalle_Command extends JButton implements CommandInterface
                 buffer.close();
             } catch (IOException ex) {
                 //JoptionPane close programme
+                editor.alert.JOptionPaneClose("clique sur yes pour fermer l'application");
+
             }
 
         }
-
 
     }
 

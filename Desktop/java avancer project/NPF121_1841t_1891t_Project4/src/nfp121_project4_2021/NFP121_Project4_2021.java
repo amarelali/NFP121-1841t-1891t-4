@@ -11,6 +11,7 @@ import org.json.simple.JSONValue;
 
 public class NFP121_Project4_2021 {
 
+    Alerts alert;
     JOptionPane jop;
     private JMenuBar mbar;
     private JFrame frame;
@@ -60,6 +61,11 @@ public class NFP121_Project4_2021 {
     private JPanel panel_EnseignantContart, panle_textFileds_Contart, panel_buttons_Contart, contenu1_Class_Contart, panel_matiere_Contart, panel_Class_contrat, panel_jour_contrat, panel_seance_contrat, panel_salle_contrat;
     JComboBox ComboBox_EnseignantContart, ComboBox_matiereContart, ComboBox_seance, ComboBox_Class, ComboBox_salle, ComboBox_jour;
     private JButton button_voireHoraireBar;
+    VoirHoraireButton_Command button_voire_Horaire;
+    private JLabel label_sepcialite, label_Center;
+    JComboBox ComboBox_HoraireCenter, ComboBox_HoraireSpecialite;
+    JPanel panel_top, panel_ComboBox_HoraireCenter, panel_ComboBox_HoraireSpecialite;
+    JTable table;
 
     public NFP121_Project4_2021() {
         frame = new JFrame("Gestion de system  universitaire");
@@ -118,6 +124,8 @@ public class NFP121_Project4_2021 {
                 if (((caracter < '0') || (caracter > '9'))
                         && (caracter != '\b')) {
                     e.consume();
+                    alert.JOptionPane("Insert a number");
+
                 }
             }
         });
@@ -269,9 +277,12 @@ public class NFP121_Project4_2021 {
         textFiled_cleEnseignant.enable(false);
         textFiled_NameEnseignant = new JTextField(15);
 
-        String specialite[] = {"Informatique", "Gestion", "Mecanique", "Genie civil"};
-        ComboBox_sepcialite_Enseignant = new JComboBox(specialite);
+        ComboBox_sepcialite_Enseignant = new JComboBox();
         ComboBox_sepcialite_Enseignant.setPreferredSize(size);
+        ComboBox_sepcialite_Enseignant.addItem(Specialite.Informatique);
+        ComboBox_sepcialite_Enseignant.addItem(Specialite.Gestion);
+        ComboBox_sepcialite_Enseignant.addItem(Specialite.Genie_civil);
+        ComboBox_sepcialite_Enseignant.addItem(Specialite.Mecanique);
 
         panel_buttons_Enseignant.add(button_Reset_Enseignant);
         panel_buttons_Enseignant.add(button_Enr_Enseignant);
@@ -344,7 +355,16 @@ public class NFP121_Project4_2021 {
         textFiled_annee_Class = new JTextField(15);
         textFiled_annee_Class.enable(false);
         textFiled_compte_Class = new JTextField(15);
-
+        textFiled_compte_Class.addKeyListener(new KeyAdapter() {
+            public void keyTyped(KeyEvent e) {
+                char caracter = e.getKeyChar();
+                if (((caracter < '0') || (caracter > '9'))
+                        && (caracter != '\b')) {
+                    e.consume();
+                    alert.JOptionPane("Insert a number");
+                }
+            }
+        });
         ComboBox_Matiereclass = new JComboBox();
         ComboBox_Matiereclass.setPreferredSize(size);
 
@@ -358,6 +378,9 @@ public class NFP121_Project4_2021 {
 
         RadioButton_semester1_Class = new JRadioButton();
         RadioButton_semester2_Class = new JRadioButton();
+
+        //Default radio button
+        RadioButton_semester1_Class.setSelected(true);
 
         bg.add(RadioButton_semester1_Class);
         bg.add(RadioButton_semester2_Class);
@@ -412,8 +435,9 @@ public class NFP121_Project4_2021 {
                     // Creates a BufferedWriter
                     BufferedReader buffer = new BufferedReader(frMatieres);
                     // Writes the string to the file
-
                     while ((LineMatieres = buffer.readLine()) != null) {
+                        System.out.println(LineMatieres);
+
                         Object obj = JSONValue.parse(LineMatieres);
                         JSONObject jsonObject = (JSONObject) obj;
                         String codeMatiere = (String) jsonObject.get("codeMatiere");
@@ -480,19 +504,19 @@ public class NFP121_Project4_2021 {
 
         ComboBox_jour = new JComboBox();
         ComboBox_jour.setPreferredSize(size);
-        ComboBox_jour.addItem(jourSemain.Lundi);
-        ComboBox_jour.addItem(jourSemain.Mardi);
-        ComboBox_jour.addItem(jourSemain.Mercredi);
-        ComboBox_jour.addItem(jourSemain.Jeudi);
-        ComboBox_jour.addItem(jourSemain.Vendredi);
-        ComboBox_jour.addItem(jourSemain.Samedi);
+        ComboBox_jour.addItem(JourSemaine.Lundi);
+        ComboBox_jour.addItem(JourSemaine.Mardi);
+        ComboBox_jour.addItem(JourSemaine.Mercredi);
+        ComboBox_jour.addItem(JourSemaine.Jeudi);
+        ComboBox_jour.addItem(JourSemaine.Vendredi);
+        ComboBox_jour.addItem(JourSemaine.Samedi);
 
         ComboBox_seance = new JComboBox();
         ComboBox_seance.setPreferredSize(size);
         //// 
-        ComboBox_seance.addItem(seance.seance1);
-        ComboBox_seance.addItem(seance.seance2);
-        ComboBox_seance.addItem(seance.seance3);
+        ComboBox_seance.addItem(Seance.seance1);
+        ComboBox_seance.addItem(Seance.seance2);
+        ComboBox_seance.addItem(Seance.seance3);
 
         ////
         ComboBox_salle = new JComboBox();
@@ -625,7 +649,6 @@ public class NFP121_Project4_2021 {
                     // Creates a BufferedWriter
                     BufferedReader buffer = new BufferedReader(frSalle);
                     // Writes the string to the file
-
                     while ((LineSalle = buffer.readLine()) != null) {
                         Object obj = JSONValue.parse(LineSalle);
                         JSONObject jsonObject = (JSONObject) obj;
@@ -652,6 +675,28 @@ public class NFP121_Project4_2021 {
         button_voireHoraire.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
+//                //code
+//                File file;
+//                String Linefile;
+//                try {
+//                    file = new File("Beirut.json");
+//                    FileReader frEnseignant = new FileReader(file);
+//                    // Creates a BufferedWriter
+//                    BufferedReader buffer = new BufferedReader(frEnseignant);
+//                    // Writes the string to the file
+//                    System.out.println(buffer.readLine());
+//
+//                    while ((Linefile = buffer.readLine()) != null) {
+//                        System.out.println(Linefile);
+//                        Object obj = JSONValue.parse(Linefile);
+////                        JSONObject jsonObject = (JSONObject) obj;
+//
+//                    }
+//                    // Closes the writer
+//                    buffer.close();
+//                } catch (IOException ex) {
+//                    //JOPtionPane close 
+//                }
                 panel_Salle.setVisible(false);
                 panel_Matiere.setVisible(false);
                 panel_Enseignant.setVisible(false);
@@ -665,6 +710,28 @@ public class NFP121_Project4_2021 {
         button_voireHoraireBar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
+//                //code
+//                File file;
+//                String Linefile;
+//                try {
+//                    file = new File("Beirut.json");
+//                    FileReader frEnseignant = new FileReader(file);
+//                    // Creates a BufferedWriter
+//                    BufferedReader buffer = new BufferedReader(frEnseignant);
+//                    // Writes the string to the file
+//                    System.out.println(buffer.readLine());
+//
+//                    while ((Linefile = buffer.readLine()) != null) {
+//                        System.out.println(Linefile);
+//                        Object obj = JSONValue.parse(Linefile);
+////                        JSONObject jsonObject = (JSONObject) obj;
+//
+//                    }
+//                    // Closes the writer
+//                    buffer.close();
+//                } catch (IOException ex) {
+//                    //JOPtionPane close 
+//                }
                 panel_Salle.setVisible(false);
                 panel_Matiere.setVisible(false);
                 panel_Enseignant.setVisible(false);
@@ -678,19 +745,50 @@ public class NFP121_Project4_2021 {
         //////////////////////     Horaire    //////////////////////////
         panelTable.setVisible(false);
         mbar.add(button_voireHoraireBar);
-        panelTable.setPreferredSize(new Dimension(700, 200));
+        // panelTable.setPreferredSize(new Dimension(780, 700));
         panelTable.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Horaire"));
 
+        ComboBox_HoraireCenter = new JComboBox(center);
+        ComboBox_HoraireCenter.setPreferredSize(size);
+
+        ComboBox_HoraireSpecialite = new JComboBox();
+        ComboBox_HoraireSpecialite.setPreferredSize(size);
+
+        ComboBox_HoraireSpecialite.addItem(Specialite.Informatique);
+        ComboBox_HoraireSpecialite.addItem(Specialite.Gestion);
+        ComboBox_HoraireSpecialite.addItem(Specialite.Genie_civil);
+        ComboBox_HoraireSpecialite.addItem(Specialite.Mecanique);
+
+        label_sepcialite = new JLabel("Sepcialite");
+        label_Center = new JLabel("Center");
+
+        panel_top = new JPanel();
+        panel_ComboBox_HoraireCenter = new JPanel(new FlowLayout());
+        panel_ComboBox_HoraireSpecialite = new JPanel(new FlowLayout());
+
+        button_voire_Horaire = new VoirHoraireButton_Command("Affiche Horaire", this);
+        button_voire_Horaire.addActionListener(button);
+
+        panel_ComboBox_HoraireCenter.add(label_Center);
+        panel_ComboBox_HoraireCenter.add(ComboBox_HoraireCenter);
+
+        panel_ComboBox_HoraireSpecialite.add(label_sepcialite);
+        panel_ComboBox_HoraireSpecialite.add(ComboBox_HoraireSpecialite);
+        panel_ComboBox_HoraireSpecialite.add(button_voire_Horaire);
+
+        panel_top.add(panel_ComboBox_HoraireCenter, BorderLayout.NORTH);
+        panel_top.add(panel_ComboBox_HoraireSpecialite, BorderLayout.WEST);
         //headers for the table
         String[] columns = new String[]{
-            "temps \\ jour ", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"
+            "temps \\ jour ", JourSemaine.Lundi.toString(), JourSemaine.Mardi.toString(), JourSemaine.Mercredi.toString(), JourSemaine.Jeudi.toString(), JourSemaine.Vendredi.toString(), JourSemaine.Samedi.toString()
         };
 
         //actual data for the table in a 2d array
         Object[][] data = new Object[][]{
-            {1, "John", 40.0, false, "John", 40.0, false},
-            {1, "John", 40.0, false, "John", 40.0, false},
-            {1, "John", 40.0, false, "John", 40.0, false},};
+            {Seance.seance1, "", "", "", "", "", ""},
+            {Seance.seance2, "", "", "", "", "", ""},
+            {Seance.seance3, "", "", "", "", "", ""},};
+
         //create table with data
         TableModel model = new DefaultTableModel(data, columns) {
             public boolean isCellEditable(int row, int column) {
@@ -698,13 +796,26 @@ public class NFP121_Project4_2021 {
             }
         };
 
-        JTable table = new JTable(model);
+        table = new JTable(model) {
+            public TableCellRenderer getCellRenderer(int row, int col) {
+
+                return new MyRenderer();
+
+            }
+
+            public TableCellEditor getCellEditor(int row, int col) {
+
+                return new MyEditor();
+
+            }
+        };
+
+        table.setFont(new Font("serif", 0, 10));
         table.setFocusable(false);
         table.setRowSelectionAllowed(false);
-        table.setRowHeight(30);
-        table.getColumnModel().getColumn(0).setPreferredWidth(100);
-
-        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer() {
+        table.setRowHeight(120);
+        table.getColumnModel().getColumn(0).setPreferredWidth(80);
+        DefaultTableCellRenderer renderer_AlignCenter = new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable arg0, Object arg1, boolean arg2, boolean arg3, int arg4, int arg5) {
                 Component tableCellRendererComponent = super.getTableCellRendererComponent(arg0, arg1, arg2, arg3, arg4, arg5);
@@ -714,27 +825,96 @@ public class NFP121_Project4_2021 {
                 return tableCellRendererComponent;
             }
         };
-        for (int i = 0; i < table.getColumnModel().getColumnCount(); i++) {
-            table.getColumnModel().getColumn(i).setCellRenderer(renderer);
+        for (int i = 0;
+                i < table.getColumnModel()
+                        .getColumnCount(); i++) {
+            table.getColumnModel().getColumn(i).setCellRenderer(renderer_AlignCenter);
         }
         //add the table to the frame
-        panelTable.add(new JScrollPane(table));
 
-        panel_background.add(panelTable);
+        panelTable.add(
+                new JScrollPane(table));
+        panelTable.add(panel_top, BorderLayout.NORTH);
+
+        panel_background.add(panelTable, BorderLayout.WEST);
+
         panel_WEST.add(panel_background, BorderLayout.WEST);
 
         panel_NORTH.add(mbar);
 
         frame.add(panel_NORTH, BorderLayout.NORTH);
+
         frame.add(panel_WEST, BorderLayout.WEST);
 
         frame.pack();
-        frame.setLocation(250, 50);
-        frame.setVisible(true);
 
-        frame.setSize(750, 500);
-        frame.setResizable(false);
+        frame.setLocation(
+                250, 50);
+        frame.setVisible(
+                true);
+
+        frame.setSize(
+                800, 600);
+        frame.setResizable(
+                false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    private class MyRenderer extends JTextArea implements TableCellRenderer {
+
+        public MyRenderer() {
+            setOpaque(true);
+            setLineWrap(true);
+            setWrapStyleWord(true);
+        }
+
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                boolean isSelected, boolean hasFocus, int row, int column) {
+
+            this.setText(value == null ? "" : value.toString());
+            return this;
+        }
+
+    }
+
+    private class MyEditor extends AbstractCellEditor implements TableCellEditor {
+
+        JTextArea comp = new JTextArea();
+        JTable table;
+        int row;
+
+        public MyEditor() {
+            comp.setLineWrap(true);
+            comp.setWrapStyleWord(true);
+            comp.addComponentListener(new ComponentAdapter() {
+                public void componentResized(ComponentEvent e) {
+                    super.componentResized(e);
+                    table.setRowHeight(row, (int) (comp.getPreferredSize().getHeight()));
+                }
+            });
+            comp.addKeyListener(new KeyAdapter() {
+                public void keyTyped(KeyEvent e) {
+                    super.keyTyped(e);
+                    table.setRowHeight(row, (int) (comp.getPreferredSize().getHeight()));
+                }
+            });
+            
+        }
+
+        public Component getTableCellEditorComponent(JTable table, Object value,
+                boolean isSelected, int row, int column) {
+            this.table = table;
+            this.row = row;
+
+            comp.setText((String) value);
+            comp.setFont(table.getFont());
+            
+            return comp;
+        }
+
+        public Object getCellEditorValue() {
+            return comp.getText();
+        }
     }
 
     public static void main(String[] args) {

@@ -3,10 +3,10 @@ package nfp121_project4_2021;
 
 public class Horaire {
   private Classe classe ;
-  private jourSemain jour;
-  private seance seance;
+  private JourSemaine jour;
+  private Seance seance;
 
-    public Horaire(Classe classe, jourSemain jour, seance seance) {
+    public Horaire(Classe classe, JourSemaine jour, Seance seance) {
         this.classe = classe;
         this.jour = jour;
         this.seance = seance;
@@ -20,19 +20,19 @@ public class Horaire {
         this.classe = classe;
     }
 
-    public jourSemain getJour() {
+    public JourSemaine getJour() {
         return jour;
     }
 
-    public void setJour(jourSemain jour) {
+    public void setJour(JourSemaine jour) {
         this.jour = jour;
     }
 
-    public seance getSeance() {
+    public Seance getSeance() {
         return seance;
     }
 
-    public void setSeance(seance seance) {
+    public void setSeance(Seance seance) {
         this.seance = seance;
     }
 

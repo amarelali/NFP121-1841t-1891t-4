@@ -29,7 +29,7 @@ public class SauvegarderButtonClasse_Command extends JButton implements CommandI
     @Override
     public void execute() {
         
-        if ( editor.textFiled_compte_Class.getText().length() == 0 && (editor.RadioButton_semester1_Class.isSelected() == false) ||  (editor.RadioButton_semester2_Class.isSelected() == false)) {
+        if ( editor.textFiled_compte_Class.getText().length() == 0 ){
                   editor.jop.showMessageDialog(this,"please fill out all fields","Alert",JOptionPane.WARNING_MESSAGE);     
             
         }else{
@@ -48,8 +48,6 @@ public class SauvegarderButtonClasse_Command extends JButton implements CommandI
 
         Classe classe = new Classe(codeClass, compte);
 
-        // pour l numero auto
-        editor.textFiled_cleMatiere.setText("" + classe.getNoClass());
         // Creates a FileWriter
         FileWriter file;
         int lines;

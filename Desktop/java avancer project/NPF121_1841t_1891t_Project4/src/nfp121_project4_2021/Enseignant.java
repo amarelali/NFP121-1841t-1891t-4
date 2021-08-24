@@ -39,8 +39,8 @@ public class Enseignant implements Serializable {
         this.specialite = specialite;
     }
 
-    public String afficheEnseignant() {
-        return "Enseignant{" + "noEnseignant=" + noEnseignant + ", NomEnseignant=" + NomEnseignant + ", specialite=" + specialite + '}';
+    public String afficheEnseignantFromfile(String enseignantId) {
+        
+        return "{\"NomEnseignant\":\"'"+this.NomEnseignant+"'\",\"specialite\":\"'"+this.specialite+"'\",\"enseignantId\":"+enseignantId+"}";
     }
-
 }

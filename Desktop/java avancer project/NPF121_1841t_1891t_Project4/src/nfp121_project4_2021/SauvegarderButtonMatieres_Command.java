@@ -70,6 +70,8 @@ class SauvegarderButtonMatieres_Command extends JButton implements CommandInterf
                 buffer.close();
             } catch (IOException ex) {
                 //JoptionPane close programme
+                editor.alert.JOptionPaneClose("clique sur yes pour fermer l'application");
+
             }
 
         }
