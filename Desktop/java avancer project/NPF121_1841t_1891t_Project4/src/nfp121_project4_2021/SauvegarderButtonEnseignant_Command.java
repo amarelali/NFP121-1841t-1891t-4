@@ -9,7 +9,7 @@ import java.io.*;
 import java.nio.file.*;
 import java.util.*;
 import javax.swing.*;
-import org.json.simple.JSONObject;
+import org.json.simple.*;
 
 /**
  *
@@ -27,20 +27,22 @@ public class SauvegarderButtonEnseignant_Command extends JButton implements Comm
 
     @Override
     public void execute() {
+        //Cheque si les textFields sont vide, s'ils sont vide il ya un alert pour eviter les erreurs et les exceptions
 
         if (editor.textFiled_NameEnseignant.getText().length() == 0) {
             editor.jop.showMessageDialog(this, "please fill out all fields", "Alert", JOptionPane.WARNING_MESSAGE);
 
         } else {
-            // get text filed
-
+            // prend les donnees et les stockees dans des variables 
             String NomEnseignant = editor.textFiled_NameEnseignant.getText();
 
             String specialite = editor.ComboBox_sepcialite_Enseignant.getSelectedItem().toString();
 
+            //Creation d'une objet enseignant pour prendre d'elle l'id 
             Enseignant enseignant = new Enseignant(NomEnseignant, specialite);
 
-            // Creates a FileWriter
+            // Creation d'un FileWriter object qui prend dans leur parametres : le fichier "matieres.json" et true 
+            // pour que le fichier ouvrit est en mode append
             FileWriter file;
             int lines;
 
@@ -48,17 +50,19 @@ public class SauvegarderButtonEnseignant_Command extends JButton implements Comm
                 File f = new File("enseignant.json");
 
                 file = new FileWriter(f, true);
-                // Creates a BufferedWriter
+                // Creation un BufferedWriter
                 BufferedWriter buffer = new BufferedWriter(file);
-                // Writes the string to the file
+                // Creation un objet de type JSONObject
                 JSONObject obj = new JSONObject();
 
                 Path path = Paths.get("enseignant.json");
-
+                //compter le number des lignes enregistrer actuellement dans le fichier
                 lines = (int) Files.lines(path).count();
+                //si le fichier n'est pas vide, on prend le number des lignes est on ajout 1 pour le nouvelle objet 
                 if (f.length() != 0) {
                     enseignant.setNumeroSerie(++lines);
                 }
+                // ajouter les donnees dans l'objet json specifier par salle
 
                 obj.put("enseignantId", enseignant.getNoEnseignant());
                 obj.put("NomEnseignant", NomEnseignant);
@@ -67,10 +71,10 @@ public class SauvegarderButtonEnseignant_Command extends JButton implements Comm
                 buffer.write(obj.toJSONString());
                 buffer.newLine();
 
-                // Closes the writer
+                // Closes writer
                 buffer.close();
             } catch (IOException ex) {
-                //JoptionPane close programme
+                //JoptionPane pour fermer le programme
                 editor.alert.JOptionPaneClose("clique sur yes pour fermer l'application");
             }
 

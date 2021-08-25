@@ -27,10 +27,9 @@ public class SauvegarderButtonContrat_Command extends JButton implements Command
 
     @Override
     public void execute() {
-        //read enseignant file if i hava nom enseignant == nomEnseignant
+
         JSONObject obj = new JSONObject();
 
-        //new class 
         String nomEnseignant = editor.ComboBox_EnseignantContart.getSelectedItem().toString();
 
         String codeMatieres = editor.ComboBox_matiereContart.getSelectedItem().toString();
@@ -55,18 +54,18 @@ public class SauvegarderButtonContrat_Command extends JButton implements Command
         obj.put("salle", salle);
         File tempFile = new File(compus + "-" + specialite + ".json");
         boolean exists = tempFile.exists();
-        boolean b = checkContrat(compus, specialite, salle, jour, seance);// bye2der ya3ml creation l json mn dun tadarob
 
-        if (exists && b) {
+        if (exists) {
+            boolean b = checkContrat(compus, specialite, salle, jour, seance);// bye2der ya3ml creation l json mn dun tadarob
 
+            if (b) {
                 FileWriter file;
                 try {
-                    File f = new File(compus + "-" + specialite + ".json");//contrant
+                    File f = new File(compus + "-" + specialite + ".json");
 
                     file = new FileWriter(f, true);
-                    // Creates a BufferedWriter
+
                     BufferedWriter buffer = new BufferedWriter(file);
-                    // Writes the string to the file
 
                     buffer.write(obj.toJSONString());
                     buffer.newLine();
@@ -78,29 +77,26 @@ public class SauvegarderButtonContrat_Command extends JButton implements Command
                     editor.alert.JOptionPaneClose("clique sur yes pour fermer l'application");
                 }
 
+            }
+        } else {
+            FileWriter file;
+            try {
+                File f = new File(compus + "-" + specialite + ".json");
+
+                file = new FileWriter(f, true);
+
+                BufferedWriter buffer = new BufferedWriter(file);
+
+                buffer.write(obj.toJSONString());
+                buffer.newLine();
+
+                // Closes the writer
+                buffer.close();
+            } catch (IOException ex) {
+                //JoptionPane close programme
+                editor.alert.JOptionPaneClose("clique sur yes pour fermer l'application");
+            }
         }
-
-//        } else {
-//            FileWriter file;
-//            try {
-//                File f = new File(compus + "-" + specialite + ".json");//contrant
-//
-//                file = new FileWriter(f, true);
-//                // Creates a BufferedWriter
-//                BufferedWriter buffer = new BufferedWriter(file);
-//                // Writes the string to the file
-//
-//                buffer.write(obj.toJSONString());
-//                buffer.newLine();
-//
-//                // Closes the writer
-//                buffer.close();
-//            } catch (IOException ex) {
-//                //JoptionPane close programme
-//                editor.alert.JOptionPaneClose("clique sur yes pour fermer l'application");
-//            }
-//        }
-
     }
 
     private String getSpecialiteFromNomEnseignant(String nomEnseignant, JSONObject obj) {
@@ -111,9 +107,8 @@ public class SauvegarderButtonContrat_Command extends JButton implements Command
 
             fileEnseignant = new File("enseignant.json");
             FileReader frEnseignant = new FileReader(fileEnseignant);
-            // Creates a BufferedWriter
+
             BufferedReader buffer = new BufferedReader(frEnseignant);
-            // Writes the string to the file
 
             while ((LinefileEnseignant = buffer.readLine()) != null) {
 
@@ -186,12 +181,11 @@ public class SauvegarderButtonContrat_Command extends JButton implements Command
         FileReader file;
         String Linefile;
         try {
-            File f = new File(compus + "-" + specialite + ".json");//contrant
+            File f = new File(compus + "-" + specialite + ".json");
 
             file = new FileReader(f);
             // Creates a BufferedWriter
             BufferedReader buffer = new BufferedReader(file);
-            // Writes the string to the file
 
             while ((Linefile = buffer.readLine()) != null) {
                 System.out.println(Linefile);

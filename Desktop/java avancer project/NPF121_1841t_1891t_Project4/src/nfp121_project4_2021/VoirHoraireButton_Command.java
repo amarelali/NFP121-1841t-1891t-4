@@ -17,6 +17,7 @@ import org.json.simple.*;
 class VoirHoraireButton_Command extends JButton implements CommandInterface_Command {
 
     NFP121_Project4_2021 editor;
+    
     HashMap<String, Integer> JourDesSemaines = new HashMap<String, Integer>();
     HashMap<String, Integer> tempEnHeure = new HashMap<String, Integer>();
 
@@ -38,8 +39,7 @@ class VoirHoraireButton_Command extends JButton implements CommandInterface_Comm
     @Override
     public void execute() {
         clearTable(editor.table);
-        System.out.println("test");
-//
+
         String specialiteSelected = editor.ComboBox_HoraireSpecialite.getSelectedItem().toString();
         String centreSelected = editor.ComboBox_HoraireCenter.getSelectedItem().toString();
         
@@ -49,13 +49,14 @@ class VoirHoraireButton_Command extends JButton implements CommandInterface_Comm
         try {
             file = new File(centreSelected + "-" + specialiteSelected + ".json");
             FileReader fr = new FileReader(file);
-            // Creates a BufferedWriter
+
             BufferedReader buffer = new BufferedReader(fr);
-            // Writes the string to the file
+
             while ((Linefile = buffer.readLine()) != null) {
-                System.out.println(Linefile);
+                
                 Object obj = JSONValue.parse(Linefile);
                 JSONObject jsonObject = (JSONObject) obj;
+                // lire data du fichier et l'afficher comme un seul string dans le tableaux d'horaire 
                 String data = "Enseignant : \n";
                 String NomEnseignant = (String) jsonObject.get("NomEnseignant");
                 data += NomEnseignant + "\n";
@@ -65,12 +66,13 @@ class VoirHoraireButton_Command extends JButton implements CommandInterface_Comm
                 String salle = (String) jsonObject.get("salle");
                 data += "Salle : \n";
                 data += salle;
+                
                 String jour = (String) jsonObject.get("jour");
                 int indiceColumn = this.JourDesSemaines.get(jour);
-                System.out.println(indiceColumn);
+                
                 String temp = (String) jsonObject.get("seance");
-                System.out.println(temp);
                 int indiceRow = this.tempEnHeure.get(temp);
+                
                 editor.table.setValueAt(data, indiceRow, indiceColumn);
 
             }

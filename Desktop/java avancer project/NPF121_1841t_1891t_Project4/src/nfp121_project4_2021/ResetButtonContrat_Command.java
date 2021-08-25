@@ -46,14 +46,6 @@ public class ResetButtonContrat_Command extends JButton implements CommandInterf
                 Object obj = JSONValue.parse(Line);
                 JSONObject jsonObject = (JSONObject) obj;
 
-                String compusfromfile = (String) jsonObject.get("compus");
-                String compusfromCombobox = editor.ComboBox_HoraireCenter.getSelectedItem().toString();
-//                System.out.println(compusfromfile);
-                writeContratDataGroupByCenter(compusfromCombobox, compusfromfile, jsonObject);
-
-                String specialitefromfile = (String) jsonObject.get("specialite");
-                String specialitefromCombobox = editor.ComboBox_HoraireSpecialite.getSelectedItem().toString();
-                writeContratDataGroupBySpecialite( specialitefromCombobox ,  specialitefromfile ,  jsonObject);
             }
             // Closes the writer
             buffer.close();
@@ -64,52 +56,5 @@ public class ResetButtonContrat_Command extends JButton implements CommandInterf
 
     }
 
-    private void writeContratDataGroupByCenter(String compus, String center, JSONObject jsonObject) {
-        try {
-            FileWriter file;
-
-            File f = new File(center + ".json");
-
-            file = new FileWriter(f, true);
-            // Creates a BufferedWriter
-            BufferedWriter buffer = new BufferedWriter(file);
-            // Writes the string to the file
-            if (compus.equals(center)) {
-
-                buffer.write(jsonObject.toJSONString());
-                buffer.newLine();
-            }
-            // Closes the writer
-            buffer.close();
-        } catch (IOException ex) {
-            //JoptionPane close programme
-            editor.alert.JOptionPaneClose("clique sur yes pour fermer l'application");
-        }
-
-    }
-
-    private void writeContratDataGroupBySpecialite(String speciatilefromCombobox, String speciatilefromfile, JSONObject jsonObject) {
-        try {
-            FileWriter file;
-
-            File f = new File(speciatilefromCombobox + ".json");
-
-            file = new FileWriter(f, true);
-            // Creates a BufferedWriter
-            BufferedWriter buffer = new BufferedWriter(file);
-            // Writes the string to the file
-            if (speciatilefromCombobox.equals(speciatilefromfile)) {
-
-                buffer.write(jsonObject.toJSONString());
-                buffer.newLine();
-            }
-            // Closes the writer
-            buffer.close();
-        } catch (IOException ex) {
-            //JoptionPane close programme
-            editor.alert.JOptionPaneClose("clique sur yes pour fermer l'application");
-        }
-
-    }
 
 }
