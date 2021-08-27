@@ -316,6 +316,7 @@ public class NFP121_Project4_2021 {
                 panel_Enseignant.setVisible(true);
                 panel_class.setVisible(false);
                 panelTable.setVisible(false);
+                panel_Contart.setVisible(false);
 
             }
 
