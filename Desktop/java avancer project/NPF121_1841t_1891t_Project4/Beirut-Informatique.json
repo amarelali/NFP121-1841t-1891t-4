@@ -1,2 +1,4 @@
-{"NomEnseignant":"enseignant1","compus":"Beirut","jour":"Lundi","specialite":"Informatique","salle":"s1","codeMatiere":"nfp121","seance":"15h00 -> 16h45","class":"nfp121-BEY-Sem1_2021"}
-{"NomEnseignant":"enseignant1","compus":"Beirut","jour":"Jeudi","specialite":"Informatique","salle":"s1","codeMatiere":"nfp121","seance":"17h00 -> 18h45","class":"nfp121-BEY-Sem1_2021"}
+{"NomEnseignant":"Chadi Kallab","compus":"Beirut","jour":"Jeudi","specialite":"Informatique","salle":"s1","codeMatiere":"nfp121","seance":"17h00 -> 18h45","class":"nfp121-BEY-Sem2_2021"}
+{"NomEnseignant":"Bilal maaz","compus":"Beirut","jour":"Lundi","specialite":"Informatique","salle":"s1","codeMatiere":"utc505","seance":"15h00 -> 16h45","class":"utc505-BEY-Sem1_2021"}
+{"NomEnseignant":"Jihad saab","compus":"Beirut","jour":"Mardi","specialite":"Informatique","salle":"s1","codeMatiere":"mva004","seance":"19h00 -> 20h45","class":"mva004-BEY-Sem1_2021"}
+{"NomEnseignant":"Jihad saab","compus":"Beirut","jour":"Mardi","specialite":"Informatique","salle":"s1","codeMatiere":"mva004","seance":"17h00 -> 18h45","class":"mva004-BEY-Sem1_2021"}

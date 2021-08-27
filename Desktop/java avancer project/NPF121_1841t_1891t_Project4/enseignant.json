@@ -1,3 +1,5 @@
-{"NomEnseignant":"enseignant1","specialite":"Informatique","enseignantId":1}
-{"NomEnseignant":"enseignant2","specialite":"Gestion","enseignantId":2}
-{"NomEnseignant":"enseignant3","specialite":"Mecanique","enseignantId":3}
+{"NomEnseignant":"Chadi Kallab","specialite":"Informatique","enseignantId":1}
+{"NomEnseignant":"Bilal maaz","specialite":"Informatique","enseignantId":2}
+{"NomEnseignant":"Jihad saab","specialite":"Informatique","enseignantId":3}
+{"NomEnseignant":"Ziad naja","specialite":"Mecanique","enseignantId":4}
+{"NomEnseignant":"ibrahim","specialite":"Genie_civil","enseignantId":5}
